@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "426937421933",
+    "firebase_url": "https://seriestracker-2c25d.firebaseio.com",
+    "project_id": "seriestracker-2c25d",
+    "storage_bucket": "seriestracker-2c25d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426937421933:android:d869c993501a2533",
+        "android_client_info": {
+          "package_name": "com.example.sebastiaan.seriestracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426937421933-8qsbqlki6ob42k5ahi5iq811v6ihqusq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sebastiaan.seriestracker",
+            "certificate_hash": "a62178bd5e56b1a516fce6fd67b5e0981753ee31"
+          }
+        },
+        {
+          "client_id": "426937421933-i6arhj8a9bmji81fqgt4v40ksh66o27v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5AZcorR37_gm_EsnRGos3ObgpKnUxBOQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426937421933-i6arhj8a9bmji81fqgt4v40ksh66o27v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
