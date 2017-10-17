@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
 
-    private final List<Fragment> fragmentList = new ArrayList<>();
+    private final List<Fragment> mFragmentList = new ArrayList<>();
 
     public FragmentAdapter(FragmentManager fm) {
         super(fm);
@@ -17,15 +17,17 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return fragmentList.get(position);
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return fragmentList.size();
+        return mFragmentList.size();
     }
 
     public void addFragment(Fragment fragment) {
-        fragmentList.add(fragment);
+        mFragmentList.add(fragment);
     }
+
+
 }
