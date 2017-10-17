@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Connect to database
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        TvShow show = new TvShow("Breaking Bad");
+        //TvShow show = new TvShow("Breaking Bad");
 
         // Add to db
         //mDatabase.child("tvshow1").setValue(show);
