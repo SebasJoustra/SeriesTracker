@@ -165,8 +165,8 @@ public class TvShowProgressActivity extends AppCompatActivity {
     public void removeFromWatchList(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(TvShowProgressActivity.this);
 
-        builder.setTitle("Delete to-do item")
-                .setMessage("Are you sure you want to delete this to-do item?")
+        builder.setTitle("Delete tv show")
+                .setMessage("Are you sure you want to delete this tv show?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 

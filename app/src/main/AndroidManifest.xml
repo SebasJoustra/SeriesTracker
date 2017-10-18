@@ -20,12 +20,18 @@
         </activity>
         <activity
             android:name=".SearchActivity"
-            android:label="Search for series"/>
+            android:label="Search for series"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".SearchResultsActivity"
-            android:label="Search results"/>
+            android:label="Search results" />
         <activity android:name=".TvShowResultActivity" />
-        <activity android:name=".TvShowProgressActivity"></activity>
+        <activity android:name=".TvShowProgressActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="Log in" />
+        <activity android:name=".CreateAccountActivity"
+            android:label="Create Account"></activity>
     </application>
 
 </manifest>

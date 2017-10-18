@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.sebastiaan.seriestracker.SearchResultsActivity">
+    tools:context="com.example.sebastiaan.seriestracker.LoginActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -18,24 +18,45 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <EditText
-        android:id="@+id/etSearchSeries"
+        android:id="@+id/etCreateEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:inputType="textCapSentences"
-        android:hint="Tv show" />
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/etCreatePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="Password" />
 
     <Button
-        android:id="@+id/btSearch"
-        style="@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/btCreateAccount"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:onClick="searchClicked"
-        android:text="Search" />
+        android:onClick="createAccount"
+        android:text="CREATE ACCOUNT" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:onClick="goToLoginActivity"
+        android:text="Already have an account? Click here to log in" />
+
 </LinearLayout>

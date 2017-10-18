@@ -15,6 +15,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,7 +53,14 @@ public class WatchlistFragment extends Fragment {
         act = getActivity();
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid()).child("tvShows");
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid()).child("tvShows");
+        } else {
+            Intent intent = new Intent(act, LoginActivity.class);
+            startActivity(intent);
+            act.finish();
+        }
         lvWatchList = rootView.findViewById(R.id.lvWatchlist);
         addDBchangeListener();
         lvWatchList.setOnItemClickListener(new ItemClickListener());

@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
+
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+
                 }
                 // ...
             }
@@ -64,14 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
         //createUser("test2@gmail.com", "pass12345");
         //logInUser("test@gmail.com", "pass1234");
-        logInUser("test2@gmail.com", "pass12345");
+        //logInUser("test2@gmail.com", "pass12345");
 
         // Connect to database
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        //TvShow show = new TvShow("Breaking Bad");
-
-        // Add to db
-        //mDatabase.child("tvshow1").setValue(show);
 
         getFromDB();
 
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.content, new UpcomingFragment()).commit();
+        transaction.replace(R.id.content, new WatchlistFragment()).commit();
 
     }
 
@@ -234,5 +234,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return true;
+    }
+
+    public void logOut(View view) {
+        FirebaseAuth.getInstance().signOut();
+        finish();
     }
 }

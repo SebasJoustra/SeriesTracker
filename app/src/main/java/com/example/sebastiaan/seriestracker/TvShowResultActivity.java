@@ -82,10 +82,12 @@ public class TvShowResultActivity extends AppCompatActivity {
     }
 
     public void addToWatchList(View view) {
-        //mDatabase = FirebaseDatabase.getInstance().getReference();
-        //mDatabase.child(tvShow.id).setValue(tvShow);
         DatabaseHelper dbHelper = new DatabaseHelper();
         dbHelper.addTvShow(tvShow);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

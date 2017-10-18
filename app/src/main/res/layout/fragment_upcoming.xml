@@ -5,18 +5,10 @@
     android:orientation="vertical"
     tools:context="com.example.sebastiaan.seriestracker.UpcomingFragment">
 
-    <Button
-        android:id="@+id/btGoToSearch"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to search activity"/>
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:padding="16dp"
+        android:text="Upcoming section: coming soon"/>
 
 </LinearLayout>
