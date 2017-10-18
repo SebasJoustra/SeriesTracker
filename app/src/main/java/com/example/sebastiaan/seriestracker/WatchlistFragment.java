@@ -2,6 +2,7 @@ package com.example.sebastiaan.seriestracker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -46,15 +48,26 @@ public class WatchlistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        inflater.inflate(R.layout.fragment_watchlist, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_watchlist, container, false);
         act = getActivity();
 
         mAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid()).child("tvShows");
-        lvWatchList = act.findViewById(R.id.lvWatchlist);
+        lvWatchList = rootView.findViewById(R.id.lvWatchlist);
         addDBchangeListener();
+        lvWatchList.setOnItemClickListener(new ItemClickListener());
 
-        return inflater.inflate(R.layout.fragment_watchlist, container, false);
+        return rootView;
+    }
+
+    public class ItemClickListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long l) {
+            Intent intent = new Intent(act, TvShowProgressActivity.class);
+            intent.putExtra("tvShow", tvShowArray.get(itemIndex));
+            startActivity(intent);
+        }
     }
 
     private void addDBchangeListener() {

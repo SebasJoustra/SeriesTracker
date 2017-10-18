@@ -49,11 +49,14 @@ public class ExtraPropertiesAsyncTask extends AsyncTask<String, Integer, String>
             try {
                 JSONObject seasonObj = seasonsJsonArray.getJSONObject(i);
                 int count = seasonObj.getInt("episode_count");
-                ArrayList<Boolean> tempList = new ArrayList<>();
-                for(int j = 0; j<count; j++) {
-                    tempList.add(false);
+                int seasonNum = seasonObj.getInt("season_number");
+                if(seasonNum != 0) {
+                    ArrayList<Boolean> tempList = new ArrayList<>();
+                    for (int j = 0; j < count; j++) {
+                        tempList.add(false);
+                    }
+                    episodesPerSeason.add(tempList);
                 }
-                episodesPerSeason.add(tempList);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
