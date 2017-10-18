@@ -64,7 +64,7 @@ public class ExtraPropertiesAsyncTask extends AsyncTask<String, Integer, String>
     private void writeToDatabase() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child(tvShow.id).setValue(tvShow);
+        mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("tvShows").child(tvShow.id).setValue(tvShow);
     }
 
 }

@@ -3,6 +3,8 @@ package com.example.sebastiaan.seriestracker;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
 
 public class DatabaseHelper {
 
@@ -18,7 +20,7 @@ public class DatabaseHelper {
 
     public void removeTvShow(TvShow tvShow) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child(tvShow.id).removeValue();
+        //mDatabase.child(tvShow.id).removeValue();
     }
 
     public void updateEpisode(TvShow tvShow, int season, int episode) {
