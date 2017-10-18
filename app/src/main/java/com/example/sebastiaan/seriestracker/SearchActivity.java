@@ -18,7 +18,6 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         etShowName = (EditText) findViewById(R.id.etSearchSeries);
-        String showName = etShowName.getText().toString();
 
     }
 
@@ -37,8 +36,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void searchClicked(View view) {
-        String test = "breaking";
         SeriesAsyncTask aSyncTask = new SeriesAsyncTask(this);
-        aSyncTask.execute(test, "search");
+        aSyncTask.execute(etShowName.getText().toString(), "search");
     }
 }

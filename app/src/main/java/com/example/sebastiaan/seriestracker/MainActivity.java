@@ -34,9 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
 
-    private FragmentAdapter mFragmentAdapter;
-    private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        //createUser("test@gmail.com", "pass1234");
-        logInUser("test@gmail.com", "pass1234");
+        //createUser("test2@gmail.com", "pass12345");
+        //logInUser("test@gmail.com", "pass1234");
+        logInUser("test2@gmail.com", "pass12345");
 
         // Connect to database
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -71,10 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
         getFromDB();
 
-        // Set up fragments
-        //mViewPager = (ViewPager) findViewById(R.id.content);
-        //setupViewPager(mViewPager);
-
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav_bar);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -83,12 +77,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content, new UpcomingFragment()).commit();
 
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
-        adapter.addFragment(new UpcomingFragment());
-        viewPager.setAdapter(adapter);
     }
 
 
@@ -213,6 +201,16 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //TODO doesnt work yet
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
         }
     }
 }

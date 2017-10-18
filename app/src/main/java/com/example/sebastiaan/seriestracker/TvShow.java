@@ -12,7 +12,7 @@ public class TvShow implements Serializable{
     public String description;
     public int numOfEpisodes;
     public int numOfSeasons;
-    public ArrayList<Integer> episodesPerSeason;
+    //public ArrayList<Integer> episodesPerSeason;
     public ArrayList<ArrayList<Boolean>> episodesCompletedList;
 
     public TvShow() {}
@@ -41,13 +41,13 @@ public class TvShow implements Serializable{
         this.numOfSeasons = numOfSeasons;
     }
 
-    public ArrayList<Integer> getEpisodesPerSeason() {
-        return episodesPerSeason;
-    }
-
-    public void setEpisodesPerSeason(ArrayList<Integer> episodesPerSeason) {
-        this.episodesPerSeason = episodesPerSeason;
-    }
+//    public ArrayList<Integer> getEpisodesPerSeason() {
+//        return episodesPerSeason;
+//    }
+//
+//    public void setEpisodesPerSeason(ArrayList<Integer> episodesPerSeason) {
+//        this.episodesPerSeason = episodesPerSeason;
+//    }
 
     public ArrayList<ArrayList<Boolean>> getEpisodesCompletedList() {
         return episodesCompletedList;

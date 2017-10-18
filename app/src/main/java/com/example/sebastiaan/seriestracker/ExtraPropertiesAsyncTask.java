@@ -2,6 +2,8 @@ package com.example.sebastiaan.seriestracker;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import org.json.JSONArray;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 public class ExtraPropertiesAsyncTask extends AsyncTask<String, Integer, String> {
     TvShow tvShow;
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
     private static final String TAG = "ExtraPropertiesAsyncTas";
 
@@ -59,8 +62,9 @@ public class ExtraPropertiesAsyncTask extends AsyncTask<String, Integer, String>
     }
 
     private void writeToDatabase() {
+        mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child(tvShow.id).setValue(tvShow);
+        mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child(tvShow.id).setValue(tvShow);
     }
 
 }
