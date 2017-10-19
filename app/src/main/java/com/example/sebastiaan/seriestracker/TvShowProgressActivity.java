@@ -32,6 +32,7 @@ public class TvShowProgressActivity extends AppCompatActivity {
     TextView tvProgress;
     TextView tvDescription;
     LinearLayout layout;
+    ImageView ivCoverImage;
 
     TvShow mTvShow;
     FirebaseAuth mAuth;
@@ -58,6 +59,7 @@ public class TvShowProgressActivity extends AppCompatActivity {
         // Initialize Views
         tvProgress = (TextView) findViewById(R.id.tvProgress);
         tvDescription = (TextView) findViewById(R.id.tvProgressDescription);
+        ivCoverImage = (ImageView) findViewById(R.id.ivProgressCover);
         layout = (LinearLayout) findViewById(R.id.llShow);
 
         // Set Views
@@ -74,7 +76,7 @@ public class TvShowProgressActivity extends AppCompatActivity {
         tvProgress.setText("Progress: "+progress+"%");
 
         // Download the cover image in an asyntask
-        new DownloadImageTask((ImageView) findViewById(R.id.ivProgressCover)).execute("http://image.tmdb.org/t/p/w185//" + mTvShow.image);
+        new ImageAsyncTask(ivCoverImage).execute("http://image.tmdb.org/t/p/w185//" + mTvShow.image);
 
         episodesCompletedList = mTvShow.getEpisodesCompletedList();
     }
@@ -91,8 +93,7 @@ public class TvShowProgressActivity extends AppCompatActivity {
             for(int j = 0; j<seasonLength; j++) {
 
                 // Add Checbbox representing the episode number
-                boolean completed = episodesCompletedList.get(i).get(j);
-                addCheckbox(i, j, completed);
+                addCheckbox(i, j);
             }
         }
     }
@@ -106,7 +107,8 @@ public class TvShowProgressActivity extends AppCompatActivity {
     }
 
     // Add Checbbox representing the episode number and whether it is completed or not
-    private void addCheckbox(int season_num, int episode_num, boolean completed) {
+    private void addCheckbox(int season_num, int episode_num) {
+        boolean completed = episodesCompletedList.get(season_num).get(episode_num);
         CheckBox cb = new CheckBox(this);
 
         // Set checkbox text and check accordingly (default is unchecked)
@@ -166,32 +168,6 @@ public class TvShowProgressActivity extends AppCompatActivity {
         }
         // Calculate percentage completed, rounded down and casted to int
         return (int) Math.floor( ((double)count/(double)mTvShow.getNumOfEpisodes()) *100);
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        // Source: https://stackoverflow.com/questions/5776851/load-image-from-url
-        private ImageView ivCoverImage;
-
-        public DownloadImageTask(ImageView image) {
-            this.ivCoverImage = image;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap bmpResult = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                bmpResult = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return bmpResult;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            ivCoverImage.setImageBitmap(result);
-        }
     }
 
     // Delete item from watch-list with a confirmation dialog.

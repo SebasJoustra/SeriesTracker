@@ -36,7 +36,7 @@ class HttpRequestHelper {
 
     // Make a HTTP connection to retrieve the JSON file.
     private static String getJSON(URL url) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         HttpURLConnection connect;
 
         if(url != null) {
@@ -48,14 +48,15 @@ class HttpRequestHelper {
                     BufferedReader bReader = new BufferedReader(new InputStreamReader(connect.getInputStream()));
                     String line;
                     while((line = bReader.readLine()) != null) {
-                        result += line;
+                        //result += line;
+                        result.append(line);
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return result;
+        return result.toString();
     }
 
     // Get the URL of the API which will return the correct JSON

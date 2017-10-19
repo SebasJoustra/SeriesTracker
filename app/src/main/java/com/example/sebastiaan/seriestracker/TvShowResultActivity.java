@@ -21,6 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 
+/**
+ * Activity which displays the selected tv-show from the result list
+ */
+
 public class TvShowResultActivity extends AppCompatActivity {
 
     private static final String TAG = "TvShowResultActivity";
@@ -28,8 +32,7 @@ public class TvShowResultActivity extends AppCompatActivity {
     TvShow tvShow;
     TextView tvName;
     TextView tvDescription;
-
-    String BASE_URL = "http://image.tmdb.org/t/p/w185//";
+    ImageView ivCoverImage;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -41,32 +44,19 @@ public class TvShowResultActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        // Get information from previous activity
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         tvShow = (TvShow) bundle.getSerializable("tvShow");
 
+        // Set toolbar title
         setTitle("Tv Show: " + tvShow.name);
 
+        // Get database information
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        // Read currect tv shows data to add the new one later
-        ValueEventListener tvShowsListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                //tvShows = dataSnapshot.child("users").child("tvShows").getValue(TvShows.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
-        };
-
-        mDatabase.addValueEventListener(tvShowsListener);
-
+        // Set Views
         setComponents();
 
     }
@@ -74,46 +64,23 @@ public class TvShowResultActivity extends AppCompatActivity {
     private void setComponents() {
         tvName = (TextView) findViewById(R.id.tvTvShowName);
         tvDescription = (TextView) findViewById(R.id.tvDescription);
+        ivCoverImage = (ImageView) findViewById(R.id.ivCoverImage);
 
         tvName.setText(tvShow.name);
         tvDescription.setText(tvShow.description);
 
-        new DownloadImageTask((ImageView) findViewById(R.id.ivCoverImage)).execute(BASE_URL + tvShow.image);
+        new ImageAsyncTask(ivCoverImage).execute("http://image.tmdb.org/t/p/w185//" + tvShow.image);
     }
 
+    // Add tv show and go back to main activity
     public void addToWatchList(View view) {
-        DatabaseHelper dbHelper = new DatabaseHelper();
-        dbHelper.addTvShow(tvShow);
-
+        addTvShow(tvShow);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        // Source: https://stackoverflow.com/questions/5776851/load-image-from-url
-        private ImageView ivCoverImage;
-
-
-        public DownloadImageTask(ImageView image) {
-            this.ivCoverImage = image;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap bmpResult = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                bmpResult = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return bmpResult;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            ivCoverImage.setImageBitmap(result);
-        }
+    private void addTvShow(TvShow tvShow) {
+        ExtraPropertiesAsyncTask asyncTask = new ExtraPropertiesAsyncTask(tvShow);
+        asyncTask.execute(tvShow.id, "tv_id");
     }
 }
