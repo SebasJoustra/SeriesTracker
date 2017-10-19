@@ -1,11 +1,8 @@
 package com.example.sebastiaan.seriestracker;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +11,12 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Fragment which handles the user profile
+ */
 
 public class ProfileFragment extends Fragment {
 
-    private static final String TAG = "ProfileFragment";
     TextView tvEmail;
 
     @Override
@@ -33,9 +32,10 @@ public class ProfileFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Your profile");
 
+        // Initialize View
         tvEmail = rootView.findViewById(R.id.tvEmail);
 
-
+        // Connect to database, and display the current user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String email = user.getEmail();

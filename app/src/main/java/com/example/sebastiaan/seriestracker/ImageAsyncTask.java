@@ -1,6 +1,5 @@
 package com.example.sebastiaan.seriestracker;
 
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -9,11 +8,15 @@ import android.widget.ImageView;
 
 import java.io.InputStream;
 
-public class ImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
-    // Source: https://stackoverflow.com/questions/5776851/load-image-from-url
-    ImageView ivTrackImage;
+/**
+ * Asynctask to download images in the background
+ * Source: https://stackoverflow.com/questions/5776851/load-image-from-url
+ */
+class ImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
 
-    public ImageAsyncTask(ImageView image) {
+    private ImageView ivTrackImage;
+
+    ImageAsyncTask(ImageView image) {
         this.ivTrackImage = image;
     }
 

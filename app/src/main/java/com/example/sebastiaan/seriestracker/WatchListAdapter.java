@@ -10,13 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
-
 import java.util.ArrayList;
 
-public class WatchListAdapter extends ArrayAdapter<TvShow> {
+/**
+ * Adapter class to handle the listview with the tv-shows from the series-tracker
+ */
 
-    public WatchListAdapter(@NonNull Context context, ArrayList<TvShow> shows) {
+class WatchListAdapter extends ArrayAdapter<TvShow> {
+
+    WatchListAdapter(@NonNull Context context, ArrayList<TvShow> shows) {
         super(context, R.layout.watchlist_row, shows);
     }
 
@@ -26,23 +28,27 @@ public class WatchListAdapter extends ArrayAdapter<TvShow> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View customRow = inflater.inflate(R.layout.watchlist_row, parent, false);
 
+        // Initialize tv-show object
         TvShow listItem = getItem(position);
 
+        // Initialize Views
         TextView tvShowName = customRow.findViewById(R.id.tvWatchListRowName);
         ImageView ivSeriesImage = customRow.findViewById(R.id.ivWatchListRowImage);
         TextView tvProgress = customRow.findViewById(R.id.tvWatchListRowProgress);
 
+        // Set View values to the corresponding tv-show values.
+        assert listItem != null;
         tvShowName.setText(listItem.name);
-        String imgUrl = listItem.image;
-        String baseUrl = "http://image.tmdb.org/t/p/w185//";
-        new ImageAsyncTask(ivSeriesImage).execute(baseUrl + imgUrl);
+        tvProgress.setText("Progress: " + getProgress(listItem) + "%");
 
-        int progress = getProgress(listItem);
-        tvProgress.setText("Progress: "+progress+"%");
+        // Execute an asynctask to load the images.
+        String imgUrl = listItem.image;
+        new ImageAsyncTask(ivSeriesImage).execute("http://image.tmdb.org/t/p/w185//" + imgUrl);
 
         return customRow;
     }
 
+    // Calculate the progress of the amount of episodes watched of a tv-show
     private int getProgress(TvShow listItem) {
         int count = 0;
         ArrayList<ArrayList<Boolean>> episodesCompletedList = listItem.getEpisodesCompletedList();

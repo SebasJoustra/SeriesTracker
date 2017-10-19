@@ -1,9 +1,9 @@
 package com.example.sebastiaan.seriestracker;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -15,9 +15,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Activity to log in to existing user account.
+ */
+
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
+
     private FirebaseAuth mAuth;
 
     EditText etEmail;
@@ -31,8 +36,10 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        // Connect to database
         mAuth = FirebaseAuth.getInstance();
 
+        // Initialize Views
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPassword = (EditText) findViewById(R.id.etPassword);
     }
@@ -49,14 +56,14 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
+                            // Login was unsuccessful, show to user
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this, "Login failed",
                                     Toast.LENGTH_SHORT).show();
+
                         }else {
+                            // Login was successful, show to user and redirect to Main Activity
                             Toast.makeText(LoginActivity.this, "Login succeeded",
                                     Toast.LENGTH_SHORT).show();
 

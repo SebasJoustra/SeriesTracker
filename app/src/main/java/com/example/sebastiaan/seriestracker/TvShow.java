@@ -3,6 +3,10 @@ package com.example.sebastiaan.seriestracker;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Tv-show model class
+ */
+
 public class TvShow implements Serializable{
 
     public String name;
@@ -12,7 +16,6 @@ public class TvShow implements Serializable{
     public String description;
     public int numOfEpisodes;
     public int numOfSeasons;
-    //public ArrayList<Integer> episodesPerSeason;
     public ArrayList<ArrayList<Boolean>> episodesCompletedList;
 
     public TvShow() {}
@@ -40,14 +43,6 @@ public class TvShow implements Serializable{
     public void setNumOfSeasons(int numOfSeasons) {
         this.numOfSeasons = numOfSeasons;
     }
-
-//    public ArrayList<Integer> getEpisodesPerSeason() {
-//        return episodesPerSeason;
-//    }
-//
-//    public void setEpisodesPerSeason(ArrayList<Integer> episodesPerSeason) {
-//        this.episodesPerSeason = episodesPerSeason;
-//    }
 
     public ArrayList<ArrayList<Boolean>> getEpisodesCompletedList() {
         return episodesCompletedList;

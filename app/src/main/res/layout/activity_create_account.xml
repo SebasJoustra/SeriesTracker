@@ -21,6 +21,7 @@
         android:id="@+id/etCreateEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
         android:ems="10"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -29,6 +30,7 @@
 
     <EditText
         android:id="@+id/etCreatePassword"
+        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

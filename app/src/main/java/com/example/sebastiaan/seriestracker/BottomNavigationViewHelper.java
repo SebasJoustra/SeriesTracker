@@ -4,6 +4,7 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
+
 import java.lang.reflect.Field;
 
 /* This helper class will change the way the bottom navigation view normally works. Source:

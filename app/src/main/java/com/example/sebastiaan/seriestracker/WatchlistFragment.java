@@ -1,19 +1,20 @@
 package com.example.sebastiaan.seriestracker;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,16 +25,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
+
+/**
+ * Fragment which handles the series-tracker watch list
+ */
 
 public class WatchlistFragment extends Fragment {
 
     private static final String TAG = "WatchlistFragment";
+
     Activity act;
     ListView lvWatchList;
     ArrayList<TvShow> tvShowArray = new ArrayList<>();
+
     private DatabaseReference mDatabaseRef;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
     private ListAdapter mListAdapter;
 
     public WatchlistFragment() {
@@ -43,7 +51,6 @@ public class WatchlistFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -53,8 +60,24 @@ public class WatchlistFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_watchlist, container, false);
         act = getActivity();
 
+        // Set actionBar title
         ((AppCompatActivity) act ).getSupportActionBar().setTitle("Series Tracker");
 
+        // Get database information and set listener
+        getDatabaseInformation();
+
+        // Set Listview and its listener
+        lvWatchList = rootView.findViewById(R.id.lvWatchlist);
+        TextView emptyText = rootView.findViewById(R.id.emptyText);
+        lvWatchList.setEmptyView(emptyText);
+        addDBchangeListener();
+        lvWatchList.setOnItemClickListener(new ItemClickListener());
+
+        return rootView;
+    }
+
+    // Get database information. Only allowed when the user is logged in.
+    private void getDatabaseInformation() {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -64,15 +87,10 @@ public class WatchlistFragment extends Fragment {
             startActivity(intent);
             act.finish();
         }
-        lvWatchList = rootView.findViewById(R.id.lvWatchlist);
-        addDBchangeListener();
-        lvWatchList.setOnItemClickListener(new ItemClickListener());
-
-        return rootView;
     }
 
-    public class ItemClickListener implements AdapterView.OnItemClickListener {
-
+    // Onclick listener for the listview items
+    private class ItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long l) {
             Intent intent = new Intent(act, TvShowProgressActivity.class);
@@ -81,6 +99,7 @@ public class WatchlistFragment extends Fragment {
         }
     }
 
+    // Get the user watch-list from the database by adding a listener to the database
     private void addDBchangeListener() {
         ValueEventListener seriesListener = new ValueEventListener() {
             @Override
@@ -90,12 +109,19 @@ public class WatchlistFragment extends Fragment {
                 for(DataSnapshot data : dataSnapshot.getChildren()) {
                     tvShowArray.add(data.getValue(TvShow.class));
                 }
+
+                // The listener would sometimes get called when the listview is (still) empty,
+                // add a null-checker to prevent this.
                 if(lvWatchList == null) {
                     lvWatchList = act.findViewById(R.id.lvWatchlist);
                 }
 
+
+                // Set adapter
                 mListAdapter = new WatchListAdapter(act, tvShowArray);
                 lvWatchList.setAdapter(mListAdapter);
+
+
             }
 
             @Override

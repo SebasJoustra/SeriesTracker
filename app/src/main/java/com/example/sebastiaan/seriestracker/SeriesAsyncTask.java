@@ -8,11 +8,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SeriesAsyncTask extends AsyncTask<String, Integer, String> {
-    Context context;
-    SearchActivity searchAct;
+/**
+ * Asynctask to search for series in the API, given a user query.
+ */
 
-    public SeriesAsyncTask(SearchActivity search) {
+class SeriesAsyncTask extends AsyncTask<String, Integer, String> {
+    private Context context;
+    private SearchActivity searchAct;
+
+    SeriesAsyncTask(SearchActivity search) {
         this.searchAct = search;
         this.context = this.searchAct.getApplicationContext();
     }
@@ -22,28 +26,33 @@ public class SeriesAsyncTask extends AsyncTask<String, Integer, String> {
         Toast.makeText(context, "Searching for shows...", Toast.LENGTH_SHORT).show();
     }
 
+    // Do a httpRequest in the background
     @Override
     protected String doInBackground(String... params) {
         return HttpRequestHelper.downloadFromServer(params);
     }
 
+    // After the API returns the information, navigate through the JSON result to find the
+    // corresponding parameters for the tv-shows
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        TvShow[] seriesArray = null;
 
+        TvShow[] seriesArray = null;
         try {
             JSONObject jsonObj = new JSONObject(result);
             JSONArray resultArray = jsonObj.getJSONArray("results");
-            seriesArray = makeTvShowObjects(resultArray);
 
+            // Make TvShow objects based on the API information
+            seriesArray = makeTvShowObjects(resultArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        // Start intent to show the results, called from the SearchActivity
         this.searchAct.seriesStartIntent(seriesArray);
     }
 
+    // Returns an array of TvShow objects based on the information given by the API
     private TvShow[] makeTvShowObjects(JSONArray jsonArray) {
         TvShow[] seriesArray = new TvShow[jsonArray.length()];
         try {
