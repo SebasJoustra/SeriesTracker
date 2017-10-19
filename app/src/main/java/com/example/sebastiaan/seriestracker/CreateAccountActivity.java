@@ -23,10 +23,10 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private static final String TAG = "CreateAccountActivity";
 
+    private EditText etCreateEmail;
+    private EditText etCreatePassword;
+
     private FirebaseAuth mAuth;
-    
-    private EditText etEmail;
-    private EditText etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +39,13 @@ public class CreateAccountActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Initialize Views
-        etEmail = (EditText) findViewById(R.id.etCreateEmail);
-        etPassword = (EditText) findViewById(R.id.etCreatePassword);
+        etCreateEmail = (EditText) findViewById(R.id.etCreateEmail);
+        etCreatePassword = (EditText) findViewById(R.id.etCreatePassword);
     }
 
     public void createAccount(View view) {
         // User clicked button to create account
-        mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
+        mAuth.createUserWithEmailAndPassword(etCreateEmail.getText().toString(), etCreatePassword.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -59,26 +59,22 @@ public class CreateAccountActivity extends AppCompatActivity {
                             // Creating account was successful, show to user and log in
                             Toast.makeText(CreateAccountActivity.this, "Created user, trying to log in",
                                     Toast.LENGTH_SHORT).show();
-                            logInUser(new View(getApplicationContext()));
+                            logIn(new View(getApplicationContext()));
                         }
 
                         // ...
                     }
                 });
     }
-    public void logInUser(View view) {
+    public void logIn(View view) {
         // User clicked button to create account gets logged in automatically
-        mAuth.signInWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
+        mAuth.signInWithEmailAndPassword(etCreateEmail.getText().toString(), etCreatePassword.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
                         if (!task.isSuccessful()) {
-                            // Login was unsuccessful, show to user
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                         }else {
-                            // Login was successful, show to user and redirect to Main Activity
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             finish();

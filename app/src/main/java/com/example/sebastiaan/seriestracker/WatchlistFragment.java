@@ -53,6 +53,7 @@ public class WatchlistFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    // Gets called when fragmentview gets opened
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

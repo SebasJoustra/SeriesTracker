@@ -32,14 +32,13 @@ class SeriesAsyncTask extends AsyncTask<String, Integer, String> {
         return HttpRequestHelper.downloadFromServer(params);
     }
 
-    // After the API returns the information, navigate through the JSON result to find the
-    // corresponding parameters for the tv-shows
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
 
         TvShow[] seriesArray = null;
         try {
+            //Navigate through the JSON result to find the corresponding parameters for the tv-shows
             JSONObject jsonObj = new JSONObject(result);
             JSONArray resultArray = jsonObj.getJSONArray("results");
 
@@ -65,7 +64,12 @@ class SeriesAsyncTask extends AsyncTask<String, Integer, String> {
                 String description = tvshowObj.getString("overview");
                 String voteAvg = tvshowObj.getString("vote_average");
 
-                seriesArray[i] = new TvShow(name, id, imageUrl, description, voteAvg);
+                TvShow tvShow = new TvShow(name, id);
+                tvShow.setImage(imageUrl);
+                tvShow.setDescription(description);
+                tvShow.setVoteAvg(voteAvg);
+
+                seriesArray[i] = tvShow;
             }
         } catch(JSONException e) {
             e.printStackTrace();

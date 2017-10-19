@@ -20,12 +20,9 @@ public class TvShow implements Serializable{
 
     public TvShow() {}
 
-    public TvShow(String aName, String anId, String anImage, String aDescription, String aVoteAvg) {
+    public TvShow(String aName, String anId) {
         this.name = aName;
         this.id = anId;
-        this.image = anImage;
-        this.description = aDescription;
-        this.voteAvg = aVoteAvg;
     }
 
     public int getNumOfEpisodes() {
@@ -50,5 +47,45 @@ public class TvShow implements Serializable{
 
     public void setEpisodesCompletedList(ArrayList<ArrayList<Boolean>> episodesCompletedList) {
         this.episodesCompletedList = episodesCompletedList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getVoteAvg() {
+        return voteAvg;
+    }
+
+    public void setVoteAvg(String voteAvg) {
+        this.voteAvg = voteAvg;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
