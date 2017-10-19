@@ -40,7 +40,6 @@ public class WatchlistFragment extends Fragment {
 
     private DatabaseReference mDatabaseRef;
     FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     private ListAdapter mListAdapter;
 
@@ -117,12 +116,9 @@ public class WatchlistFragment extends Fragment {
                     lvWatchList = act.findViewById(R.id.lvWatchlist);
                 }
 
-
                 // Set adapter
                 mListAdapter = new WatchListAdapter(act, tvShowArray);
                 lvWatchList.setAdapter(mListAdapter);
-
-
             }
 
             @Override

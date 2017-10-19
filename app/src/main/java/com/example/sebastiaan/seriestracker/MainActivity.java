@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * The main activity which gets called on start-up
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
+        // Make sure some data is stored when there is no internet connection
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         // Set listener to check user log-in
         setAuthStateListener();

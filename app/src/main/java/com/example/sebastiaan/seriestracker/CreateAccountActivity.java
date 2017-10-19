@@ -61,8 +61,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             logIn(new View(getApplicationContext()));
                         }
-
-                        // ...
                     }
                 });
     }
